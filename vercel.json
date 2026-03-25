@@ -1,0 +1,19 @@
+# NE Plains WeatherScope
+
+HRRR & NAM weather model viewer for Nebraska and surrounding states.
+
+## Deploy to Vercel
+
+1. Upload all files to GitHub maintaining this folder structure:
+   - vercel.json  (at root)
+   - api/tiles.js
+   - api/meta.js
+   - public/index.html
+
+2. Connect repo to Vercel → Deploy
+
+## Data Sources
+- NOAA HRRR model via Iowa State IEM tile service
+- NEXRAD live radar via Iowa State IEM
+- NWS active warnings via Iowa State IEM
+- Base maps: CartoDB
