@@ -10,7 +10,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a2a3a;display:flex;flex-direction:column}
-
 #hdr{background:#1a3a5c;border-bottom:2px solid #0f2540;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:10px}
 .logo-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#2060c0,#30b0e0);display:flex;align-items:center;justify-content:center;font-size:17px}
@@ -22,10 +21,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a2a3
 #status-pill.ok     {background:#0a2a10;border-color:#1a5020;color:#40d870}
 #status-pill.loading{background:#0a1828;border-color:#1a3850;color:#50a0d0}
 #status-pill.err    {background:#2a0808;border-color:#501010;color:#e05050}
-
 #body{display:flex;flex:1;overflow:hidden;min-height:0}
-
-#sb{width:188px;background:#1e3a5a;border-right:2px solid #0f2540;padding:6px;overflow-y:auto;flex-shrink:0}
+#sb{width:192px;background:#1e3a5a;border-right:2px solid #0f2540;padding:6px;overflow-y:auto;flex-shrink:0}
 .sec{font-size:9px;color:#3a6080;text-transform:uppercase;letter-spacing:1.5px;font-family:monospace;padding:9px 5px 3px}
 .opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:5px;padding:6px 9px;color:#5a8aaa;font-size:12px;cursor:pointer;transition:all .12s;line-height:1.3}
 .opt:hover{color:#c0d8f0;background:#142840}
@@ -34,36 +31,30 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a2a3
 .opt.on .sub{color:#5090b0}
 .tag{float:right;font-size:9px;background:#0a1e30;border-radius:3px;padding:1px 5px;color:#2a5070;font-family:monospace}
 .opt.on .tag{color:#60a8d8;background:#082040}
-
+.divider{height:1px;background:#0f2540;margin:6px 4px}
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
-
 #tb{background:#e8eef4;border-bottom:1px solid #c0ccd8;padding:6px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
 .tl{font-size:11px;color:#4a6070}
 select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8px;color:#2a4060;font-size:12px;cursor:pointer;outline:none}
-#run-label-wrap{margin-left:auto;font-size:11px;font-family:monospace;color:#5a7090}
-#run-label-wrap b{color:#1a5090}
-
+#run-wrap{margin-left:auto;font-size:11px;font-family:monospace;color:#5a7090}
+#run-wrap b{color:#1a5090}
 #mw{flex:1;position:relative;overflow:hidden;min-height:0}
 #map{width:100%;height:100%}
-.leaflet-container{background:#f8f8f0!important}
+.leaflet-container{background:#f0f4f0!important}
 .leaflet-control-zoom a{background:#fff!important;color:#2a5090!important;border-color:#c0ccd8!important}
-.leaflet-control-attribution{background:rgba(255,255,255,0.8)!important;color:#8090a0!important;font-size:9px}
-
+.leaflet-control-attribution{background:rgba(255,255,255,.8)!important;color:#8090a0!important;font-size:9px}
 #map-info{position:absolute;bottom:46px;left:10px;z-index:900;pointer-events:none;display:flex;flex-direction:column;gap:4px}
-.mp{background:rgba(255,255,255,0.92);border:1px solid #c0ccd8;border-radius:5px;padding:4px 10px;font-size:11px;font-family:monospace;color:#4a6070;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.mp{background:rgba(255,255,255,.93);border:1px solid #c0ccd8;border-radius:5px;padding:4px 10px;font-size:11px;font-family:monospace;color:#4a6070;box-shadow:0 1px 4px rgba(0,0,0,.1)}
 .mp b{color:#1a4080}
-
-#leg{position:absolute;top:10px;right:10px;z-index:900;background:rgba(255,255,255,0.95);border:1px solid #c0ccd8;border-radius:7px;padding:9px 12px;font-family:monospace;min-width:185px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+#leg{position:absolute;top:10px;right:10px;z-index:900;background:rgba(255,255,255,.95);border:1px solid #c0ccd8;border-radius:7px;padding:9px 12px;font-family:monospace;min-width:195px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .leg-title{color:#4a6070;margin-bottom:5px;font-size:9px;text-transform:uppercase;letter-spacing:1.2px}
 .leg-bar{height:11px;width:100%;border-radius:3px;margin-bottom:3px}
 .leg-labels{display:flex;justify-content:space-between;color:#8090a0;font-size:9px}
-
-#loading{position:absolute;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(248,250,252,0.90)}
+#loading{position:absolute;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(248,250,252,.9)}
 .spinner{width:40px;height:40px;border-radius:50%;border:3px solid #c0d0e0;border-top-color:#2070c0;animation:spin .7s linear infinite;margin-bottom:12px}
 @keyframes spin{to{transform:rotate(360deg)}}
 #loading p{color:#3a5a78;font-size:13px;font-family:monospace}
-#loading .sub{color:#7090a8;font-size:11px;margin-top:4px}
-
+#loading .lsub{color:#7090a8;font-size:11px;margin-top:4px}
 #ctrl{background:#e8eef4;border-top:1px solid #c0ccd8;padding:8px 14px;flex-shrink:0}
 .cr{display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .cb{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:5px 12px;color:#3a6080;font-size:13px;cursor:pointer;transition:all .12s;white-space:nowrap}
@@ -71,7 +62,7 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
 .cb.on{background:#1a4a90;border-color:#1060c0;color:#fff}
 .cb:disabled{opacity:.3;cursor:default}
 #fh-slider{flex:1;accent-color:#1a60c0;cursor:pointer}
-#fh-val{font-family:monospace;font-size:11px;color:#4a6a88;min-width:175px;text-align:right}
+#fh-val{font-family:monospace;font-size:11px;color:#4a6a88;min-width:185px;text-align:right}
 .ticks{display:flex;justify-content:space-between;font-size:9px;color:#90a8c0;font-family:monospace;padding:0 2px}
 .ticks span{cursor:pointer;padding:1px 3px;border-radius:2px;transition:color .1s}
 .ticks span:hover,.ticks span.cur{color:#1a60c0;font-weight:600}
@@ -88,7 +79,7 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
     </div>
   </div>
   <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
-    <div class="badge">Data: <b>NOAA / Iowa State IEM</b></div>
+    <div class="badge">Data: <b>NOAA / IEM / RainViewer</b></div>
     <div class="badge">Run: <b id="run-time">—</b></div>
     <div id="status-pill" class="loading">◌ Loading…</div>
   </div>
@@ -96,18 +87,19 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
 
 <div id="body">
   <div id="sb">
-    <div class="sec">Model</div>
-    <button class="opt on" data-model="hrrr">HRRR<span class="sub">Hourly · 0–18h forecast</span></button>
-    <button class="opt"    data-model="nam" >NAM 3km<span class="sub">Every 6h · 0–60h forecast</span></button>
+    <div class="sec">Observed · Live</div>
+    <button class="opt on" data-prod="obs-radar">📡 NEXRAD Radar<span class="sub">Past 2hrs animated · live</span></button>
+    <button class="opt" data-prod="obs-nowcast">🔮 Radar Nowcast<span class="sub">Next 30 min forecast</span></button>
+    <button class="opt" data-prod="obs-warnings">⚠️ NWS Warnings<span class="sub">Active alerts · live</span></button>
 
-    <div class="sec">Variable</div>
-    <button class="opt on" data-pkg="refd">🟢 Reflectivity (Rain)<span class="sub">Simulated radar</span></button>
-    <button class="opt"    data-pkg="refp">❄️ Reflectivity (Frozen)<span class="sub">Snow / ice / mixed</span></button>
+    <div class="divider"></div>
+    <div class="sec">HRRR Forecast · 0–18h</div>
+    <button class="opt" data-prod="hrrr-refd">🟢 Reflectivity (Rain)<span class="sub">Simulated radar</span></button>
+    <button class="opt" data-prod="hrrr-refp">❄️ Reflectivity (Frozen)<span class="sub">Snow / ice / mixed</span></button>
+    <button class="opt" data-prod="hrrr-t2m">🌡 2m Temperature<span class="sub">Always shows data</span></button>
+    <button class="opt" data-prod="hrrr-td2m">💧 Dewpoint 2m<span class="sub">Surface moisture</span></button>
 
-    <div class="sec">Live Overlays</div>
-    <button class="opt" data-pkg="nexrad">📡 NEXRAD Observed<span class="sub">Actual radar · now</span></button>
-    <button class="opt" data-pkg="warnings">⚠️ NWS Warnings<span class="sub">Active alerts · live</span></button>
-
+    <div class="divider"></div>
     <div class="sec">Region</div>
     <button class="opt on" data-view="ne">Nebraska</button>
     <button class="opt" data-view="plains">Central Plains</button>
@@ -118,16 +110,17 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
     <button class="opt" data-view="ia">Iowa / MO</button>
     <button class="opt" data-view="co">Colorado / WY</button>
 
+    <div class="divider"></div>
     <div class="sec">Base Map</div>
     <button class="opt on" data-base="light">Light</button>
     <button class="opt"    data-base="topo" >Terrain</button>
     <button class="opt"    data-base="sat"  >Satellite</button>
     <button class="opt"    data-base="dark" >Dark</button>
 
+    <div class="divider"></div>
     <div class="sec">Overlays</div>
     <button class="opt" id="tog-states">State Borders <span class="tag" id="states-tag">off</span></button>
     <button class="opt" id="tog-counties">Counties <span class="tag" id="counties-tag">off</span></button>
-    <button class="opt" id="tog-ww">NWS Warnings <span class="tag" id="ww-tag">off</span></button>
   </div>
 
   <div id="main">
@@ -141,26 +134,25 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
         <option value="450" selected>Normal</option>
         <option value="180">Fast</option>
       </select>
-      <span id="run-label-wrap">Model run: <b id="run-label">—</b></span>
+      <span id="run-wrap">Model run: <b id="run-label">—</b></span>
     </div>
 
     <div id="mw">
       <div id="map"></div>
       <div id="map-info">
-        <div class="mp" id="mp-model">Model: <b>HRRR</b></div>
-        <div class="mp" id="mp-prod">Product: <b>Reflectivity (Rain)</b></div>
-        <div class="mp" id="mp-fh">Forecast: <b>+0h</b></div>
-        <div class="mp" id="mp-valid">Valid: <b>—</b></div>
+        <div class="mp" id="mp-prod">Product: <b>NEXRAD Radar</b></div>
+        <div class="mp" id="mp-fh">Frame: <b>—</b></div>
+        <div class="mp" id="mp-valid">Valid: <b>Now</b></div>
       </div>
       <div id="leg">
         <div class="leg-title" id="leg-title">Reflectivity (dBZ)</div>
-        <div class="leg-bar"   id="leg-bar"   style="background:linear-gradient(to right,#0040ff,#00aaff,#00ffee,#00ff40,#aaff00,#ffff00,#ffcc00,#ff8800,#ff3300,#cc0000,#800000)"></div>
+        <div class="leg-bar"   id="leg-bar" style="background:linear-gradient(to right,#0040ff,#00aaff,#00ffee,#00ff40,#aaff00,#ffff00,#ffcc00,#ff8800,#ff3300,#cc0000,#800000)"></div>
         <div class="leg-labels" id="leg-labels"><span>5</span><span>15</span><span>25</span><span>35</span><span>45</span><span>55</span><span>65+</span></div>
       </div>
       <div id="loading">
         <div class="spinner"></div>
-        <p id="load-msg">Building HRRR tile layers…</p>
-        <p class="sub" id="load-sub">Tiles served via Vercel proxy → Iowa State IEM</p>
+        <p id="load-msg">Fetching live radar…</p>
+        <p class="lsub" id="load-sub">Connecting to RainViewer / NOAA</p>
       </div>
     </div>
 
@@ -172,7 +164,7 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
         <button class="cb" id="b-fw">▶</button>
         <button class="cb" id="b-en">⏭</button>
         <input type="range" id="fh-slider" min="0" value="0" step="1"/>
-        <span id="fh-val">+0h</span>
+        <span id="fh-val">—</span>
       </div>
       <div class="ticks" id="ticks"></div>
     </div>
@@ -182,12 +174,12 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
 <script>
 'use strict';
 
-// ── Regions & base maps ───────────────────────────────────────────────────────
+// ── Config ────────────────────────────────────────────────────────────────────
 const VIEWS = {
-  ne:    {c:[41.5, -99.5], z:7}, plains:{c:[40.5,-99.0], z:6},
-  ncus:  {c:[43.0, -96.0], z:5}, conus: {c:[39.0,-96.0], z:4},
-  ks:    {c:[37.5, -98.0], z:6}, sd:    {c:[45.5,-100.0],z:6},
-  ia:    {c:[42.0, -93.0], z:6}, co:    {c:[40.0,-105.5],z:6},
+  ne:    {c:[41.5,-99.5],z:7}, plains:{c:[40.5,-99.0],z:6},
+  ncus:  {c:[43.0,-96.0],z:5}, conus: {c:[39.0,-96.0],z:4},
+  ks:    {c:[37.5,-98.0],z:6}, sd:    {c:[45.5,-100.0],z:6},
+  ia:    {c:[42.0,-93.0],z:6}, co:    {c:[40.0,-105.5],z:6},
 };
 const BASES = {
   light:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
@@ -196,9 +188,36 @@ const BASES = {
   dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
 };
 
-// ── Calculate HRRR run time from UTC clock ────────────────────────────────────
-// No API call needed — HRRR runs every hour.
-// We go back 1h to ensure the run has finished processing on IEM (~45 min lag).
+// ── THE FIX: proxy URL builder ────────────────────────────────────────────────
+// We pass the IEM base URL (without tile coords) as "base" param.
+// Leaflet replaces {z}/{x}/{y} AFTER we build the URL template,
+// so they must remain as literal {z}/{x}/{y} in the template string.
+// The proxy then receives the real z/x/y values and reconstructs the full URL.
+function proxyTile(iemBase) {
+  // iemBase = everything before /{z}/{x}/{y}.png
+  // Result:  /api/tiles?base=ENCODED_BASE&z={z}&x={x}&y={y}
+  // Leaflet replaces {z}/{x}/{y} → actual numbers before the HTTP request
+  return '/api/tiles?base=' + encodeURIComponent(iemBase) + '&z={z}&x={x}&y={y}';
+}
+
+// IEM HRRR tile base URLs
+// Documented: https://mesonet.agron.iastate.edu/GIS/model.phtml
+// Format: /cache/tile.py/1.0.0/hrrr::{PROD}-F{MINS}-{INIT}
+//   PROD = REFD, REFP, T2M, TD2M
+//   MINS = forecast minutes zero-padded to 4 digits
+//   INIT = YYYYMMDDHHMM (12 digits)
+function iemHrrrBase(prod, mins, init) {
+  const M = String(mins).padStart(4, '0');
+  return `https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/hrrr::${prod}-F${M}-${init}`;
+}
+
+// RainViewer tile URL (no proxy needed — RainViewer has CORS headers)
+function rvTile(timestamp, colorScheme) {
+  return `https://tilecache.rainviewer.com/v2/radar/${timestamp}/256/{z}/{x}/{y}/${colorScheme}/1_1.png`;
+}
+
+// ── Clock-based HRRR run calculation ─────────────────────────────────────────
+// HRRR runs every hour. Go back 1h to ensure IEM has processed it (~45 min lag).
 function calcInit() {
   const d = new Date();
   d.setUTCMinutes(0, 0, 0);
@@ -207,7 +226,7 @@ function calcInit() {
   const mo = String(d.getUTCMonth()+1).padStart(2,'0');
   const dy = String(d.getUTCDate()).padStart(2,'0');
   const hr = String(d.getUTCHours()).padStart(2,'0');
-  return `${y}${mo}${dy}${hr}00`; // e.g. "202603251300"
+  return `${y}${mo}${dy}${hr}00`; // "202603252200"
 }
 
 function fmtInit(s) {
@@ -215,70 +234,57 @@ function fmtInit(s) {
   return `${s.slice(4,6)}/${s.slice(6,8)}/${s.slice(0,4)} ${s.slice(8,10)}z`;
 }
 
+function fmtTs(ts) {
+  return new Date(ts * 1000).toLocaleString('en-US', {
+    month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', timeZoneName:'short'
+  });
+}
+
 function validTime(init, fhMins) {
   if (!init || init.length < 12) return '—';
   try {
-    const dt = new Date(Date.UTC(
-      +init.slice(0,4), +init.slice(4,6)-1, +init.slice(6,8), +init.slice(8,10)
-    ));
+    const dt = new Date(Date.UTC(+init.slice(0,4), +init.slice(4,6)-1, +init.slice(6,8), +init.slice(8,10)));
     dt.setUTCMinutes(dt.getUTCMinutes() + fhMins);
     return dt.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
-  } catch(e) { return '—'; }
-}
-
-// ── Proxy URL — routes through /api/tiles serverless function ─────────────────
-function px(iemUrl) {
-  return '/api/tiles?url=' + encodeURIComponent(iemUrl);
-}
-
-// IEM HRRR TMS tile URL
-// Documented at: https://mesonet.agron.iastate.edu/GIS/model.phtml
-// Format: /cache/tile.py/1.0.0/hrrr::{PROD}-F{MINS}-{INIT}/{z}/{x}/{y}.png
-//   PROD = REFD (rain reflectivity) or REFP (frozen precip reflectivity)
-//   MINS = forecast minutes, zero-padded to 4 digits (0060 = 1 hour)
-//   INIT = YYYYMMDDHHMM (12 digits, e.g. 202603251300)
-function iemHrrrUrl(prod, mins, init) {
-  const M = String(mins).padStart(4,'0');
-  return `https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/hrrr::${prod}-F${M}-${init}/{z}/{x}/{y}.png`;
+  } catch { return '—'; }
 }
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map = L.map('map', {center:VIEWS.ne.c, zoom:VIEWS.ne.z});
 let baseLayer = L.tileLayer(BASES.light, {attribution:'© OSM © CARTO', maxZoom:18}).addTo(map);
 
-// ── App state ─────────────────────────────────────────────────────────────────
-let model='hrrr', pkg='refd';
-let initStr = calcInit();
-let frames=[], layers=[], liveLayer=null;
-let currentFrame=0, playing=false, playTimer=null, opacity=0.85;
-let statesLayer=null,statesOn=false,countiesLayer=null,countiesOn=false,wwLayer=null,wwOn=false;
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentProd = 'obs-radar';
+let initStr     = calcInit();
+let frames      = [];   // [{label, mins?, timestamp?}]
+let layers      = [];   // L.tileLayer per frame
+let currentFrame= 0;
+let playing     = false;
+let playTimer   = null;
+let opacity     = 0.85;
+let statesLayer=null, statesOn=false;
+let countiesLayer=null, countiesOn=false;
 
 // ── Build frame list ──────────────────────────────────────────────────────────
-function buildFrameList(mdl) {
+function hrrrFrames() {
   const out = [];
-  const max  = mdl === 'hrrr' ? 18 : 60;
-  const step = mdl === 'hrrr' ? 1  : 3;
-  for (let h = 0; h <= max; h += step) {
-    out.push({ h, mins: h*60, label: `+${h}h` });
-  }
+  for (let h = 0; h <= 18; h++) out.push({h, mins:h*60, label:`+${h}h`});
   return out;
 }
 
 // ── Build tile layers ─────────────────────────────────────────────────────────
-function buildLayers() {
-  clearLayers();
-  frames = buildFrameList(model);
-  const prod = pkg === 'refp' ? 'REFP' : 'REFD';
+function buildHrrrLayers(iemProd) {
+  frames = hrrrFrames();
+  return frames.map(f => {
+    const base = iemHrrrBase(iemProd, f.mins, initStr);
+    return L.tileLayer(proxyTile(base), {opacity:0, tileSize:256, zIndex:10, attribution:'NOAA HRRR / Iowa State IEM', crossOrigin:'anonymous'});
+  });
+}
 
-  layers = frames.map(f => {
-    const iemUrl = iemHrrrUrl(prod, f.mins, initStr);
-    return L.tileLayer(px(iemUrl), {
-      opacity: 0,
-      tileSize: 256,
-      zIndex: 10,
-      attribution: 'NOAA HRRR · Iowa State IEM',
-      crossOrigin: 'anonymous',
-    });
+function buildRvLayers(rvFrames, colorScheme) {
+  frames = rvFrames.map(f => ({label: fmtTs(f.time), timestamp: f.time, mins:0}));
+  return frames.map((f, i) => {
+    return L.tileLayer(rvTile(rvFrames[i].time, colorScheme), {opacity:0, tileSize:256, zIndex:10, attribution:'RainViewer / NOAA'});
   });
 }
 
@@ -293,72 +299,101 @@ function showFrame(idx) {
 
   const f = frames[currentFrame];
   document.getElementById('fh-slider').value = currentFrame;
-  document.getElementById('fh-val').textContent = f.label + '  (' + validTime(initStr, f.mins) + ')';
-  document.getElementById('mp-fh').innerHTML   = `Forecast: <b>${f.label}</b>`;
-  document.getElementById('mp-valid').innerHTML = `Valid: <b>${validTime(initStr, f.mins)}</b>`;
+  document.getElementById('fh-val').textContent = f.timestamp
+    ? fmtTs(f.timestamp)
+    : (f.label + (initStr ? '  (' + validTime(initStr, f.mins) + ')' : ''));
+  document.getElementById('mp-fh').innerHTML   = `Frame: <b>${f.label}</b>`;
+  document.getElementById('mp-valid').innerHTML = `Valid: <b>${f.timestamp ? fmtTs(f.timestamp) : validTime(initStr, f.mins)}</b>`;
   highlightTick();
 }
 
 // ── Load product ──────────────────────────────────────────────────────────────
-function loadProduct() {
+async function loadProduct() {
   showLoading(true);
   clearLayers();
   document.getElementById('fh-slider').disabled = false;
   document.getElementById('b-pl').disabled = false;
 
-  // Recalculate run time each load so it stays fresh
-  initStr = calcInit();
-  document.getElementById('run-time').textContent  = fmtInit(initStr);
-  document.getElementById('run-label').textContent = fmtInit(initStr);
+  try {
+    // ── Observed: RainViewer radar ──
+    if (currentProd === 'obs-radar' || currentProd === 'obs-nowcast') {
+      setLoadMsg('Fetching live radar frames…', 'Connecting to RainViewer');
+      const res  = await fetch('/api/radar');
+      if (!res.ok) throw new Error('/api/radar returned ' + res.status);
+      const data = await res.json();
 
-  // NEXRAD live radar
-  if (pkg === 'nexrad') {
-    const url = px('https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png');
-    liveLayer = L.tileLayer(url,{opacity,tileSize:256,zIndex:10,attribution:'NOAA NEXRAD / IEM'}).addTo(map);
-    layers=[liveLayer]; frames=[{h:0,mins:0,label:'Live'}];
-    document.getElementById('fh-slider').disabled=true;
-    document.getElementById('b-pl').disabled=true;
-    document.getElementById('fh-val').textContent='Live — updates every 5 min';
-    document.getElementById('mp-fh').innerHTML='Product: <b>Live NEXRAD Composite</b>';
-    document.getElementById('mp-valid').innerHTML='Valid: <b>Now</b>';
-    setStatus('ok','● Live NEXRAD radar');
-    buildTicks([{label:'Live'}]); updateLegend('nexrad');
-    showLoading(false); return;
+      let rvFrames = [];
+      if (currentProd === 'obs-radar') {
+        rvFrames = data.radar?.past || [];
+      } else {
+        rvFrames = [...(data.radar?.past || []).slice(-3), ...(data.radar?.nowcast || [])];
+      }
+      if (!rvFrames.length) throw new Error('No radar frames returned');
+
+      layers = buildRvLayers(rvFrames, 2); // color scheme 2 = standard radar colors
+      setupSlider();
+      showFrame(frames.length - 1); // start at most recent
+      setStatus('ok', `● Live radar · ${frames.length} frames`);
+      document.getElementById('run-time').textContent  = 'Live';
+      document.getElementById('run-label').textContent = 'Live';
+      updateLegend('radar');
+    }
+
+    // ── Observed: NWS Warnings ──
+    else if (currentProd === 'obs-warnings') {
+      const base = 'https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/warnings-c';
+      layers = [L.tileLayer(proxyTile(base), {opacity, tileSize:256, zIndex:10, attribution:'NWS / IEM'}).addTo(map)];
+      frames = [{label:'Live', mins:0}];
+      document.getElementById('fh-slider').disabled = true;
+      document.getElementById('b-pl').disabled = true;
+      document.getElementById('fh-val').textContent = 'Live NWS Warnings';
+      document.getElementById('mp-fh').innerHTML   = 'Product: <b>Active NWS Warnings</b>';
+      document.getElementById('mp-valid').innerHTML = 'Valid: <b>Now</b>';
+      setStatus('ok', '● Active NWS warnings');
+      document.getElementById('run-time').textContent  = 'Live';
+      document.getElementById('run-label').textContent = 'Live';
+      buildTicks([{label:'Live'}]);
+      updateLegend('warnings');
+    }
+
+    // ── HRRR forecast products ──
+    else {
+      initStr = calcInit();
+      document.getElementById('run-time').textContent  = fmtInit(initStr);
+      document.getElementById('run-label').textContent = fmtInit(initStr);
+
+      const prodMap = {
+        'hrrr-refd': 'REFD',
+        'hrrr-refp': 'REFP',
+        'hrrr-t2m':  'T2M',
+        'hrrr-td2m': 'TD2M',
+      };
+      const iemProd = prodMap[currentProd] || 'REFD';
+
+      setLoadMsg(`Loading HRRR ${iemProd}…`, `Run: ${fmtInit(initStr)} · via Vercel proxy → IEM`);
+      layers = buildHrrrLayers(iemProd);
+      setupSlider();
+      showFrame(0);
+      updateLegend(currentProd);
+      setStatus('ok', `● HRRR ${iemProd} · run ${fmtInit(initStr)}`);
+    }
+
+  } catch(e) {
+    console.error('[loadProduct]', e);
+    setStatus('err', '⚠ ' + e.message);
+    document.getElementById('load-msg').textContent = '⚠ ' + e.message;
+    document.getElementById('load-sub').textContent = 'Check Vercel function logs for details';
+    return;
   }
-
-  // NWS Warnings
-  if (pkg === 'warnings') {
-    const url = px('https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/warnings-c/{z}/{x}/{y}.png');
-    liveLayer = L.tileLayer(url,{opacity:0.75,tileSize:256,zIndex:10,attribution:'NWS / IEM'}).addTo(map);
-    layers=[liveLayer]; frames=[{h:0,mins:0,label:'Live'}];
-    document.getElementById('fh-slider').disabled=true;
-    document.getElementById('b-pl').disabled=true;
-    document.getElementById('fh-val').textContent='Live NWS Warnings';
-    document.getElementById('mp-fh').innerHTML='Product: <b>Active NWS Warnings</b>';
-    document.getElementById('mp-valid').innerHTML='Valid: <b>Now</b>';
-    setStatus('ok','● Active NWS warnings');
-    buildTicks([{label:'Live'}]); updateLegend('warnings');
-    showLoading(false); return;
-  }
-
-  // HRRR / NAM forecast tiles
-  buildLayers();
-  setupSlider();
-  showFrame(0);
-  updateLegend(pkg);
-
-  const mdlLabel = model.toUpperCase();
-  const pkgLabel = pkg === 'refp' ? 'Frozen Precip' : 'Reflectivity';
-  setStatus('ok', `● ${mdlLabel} ${pkgLabel} · run ${fmtInit(initStr)}`);
-  document.getElementById('mp-model').innerHTML = `Model: <b>${mdlLabel}</b>`;
 
   showLoading(false);
 }
 
-// ── Slider & ticks ────────────────────────────────────────────────────────────
+// ── Slider / ticks ────────────────────────────────────────────────────────────
 function setupSlider() {
   const sl = document.getElementById('fh-slider');
-  sl.max=Math.max(0,frames.length-1); sl.value=0;
+  sl.max = Math.max(0, frames.length-1);
+  sl.value = 0;
   buildTicks(frames);
 }
 function buildTicks(arr) {
@@ -402,19 +437,14 @@ document.getElementById('op-sl').oninput=function(){
 };
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
-document.querySelectorAll('[data-model]').forEach(btn=>{
+document.querySelectorAll('[data-prod]').forEach(btn=>{
   btn.onclick=function(){
-    document.querySelectorAll('[data-model]').forEach(b=>b.classList.remove('on'));
-    this.classList.add('on'); model=this.dataset.model;
-    if(playing)togglePlay(); loadProduct();
-  };
-});
-document.querySelectorAll('[data-pkg]').forEach(btn=>{
-  btn.onclick=function(){
-    document.querySelectorAll('[data-pkg]').forEach(b=>b.classList.remove('on'));
-    this.classList.add('on'); pkg=this.dataset.pkg;
-    const L={refd:'Reflectivity (Rain)',refp:'Reflectivity (Frozen)',nexrad:'NEXRAD Observed',warnings:'NWS Warnings'};
-    document.getElementById('mp-prod').innerHTML=`Product: <b>${L[pkg]||pkg}</b>`;
+    document.querySelectorAll('[data-prod]').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on'); currentProd=this.dataset.prod;
+    const L2={'obs-radar':'NEXRAD Radar','obs-nowcast':'Radar Nowcast','obs-warnings':'NWS Warnings',
+              'hrrr-refd':'HRRR Reflectivity (Rain)','hrrr-refp':'HRRR Reflectivity (Frozen)',
+              'hrrr-t2m':'HRRR 2m Temperature','hrrr-td2m':'HRRR Dewpoint 2m'};
+    document.getElementById('mp-prod').innerHTML=`Product: <b>${L2[currentProd]||currentProd}</b>`;
     if(playing)togglePlay(); loadProduct();
   };
 });
@@ -435,42 +465,43 @@ document.querySelectorAll('[data-base]').forEach(btn=>{
   };
 });
 
-// ── Overlay toggles ───────────────────────────────────────────────────────────
-function makeOv(path,z,op){
-  return L.tileLayer(px(`https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/${path}/{z}/{x}/{y}.png`),
-    {opacity:op,tileSize:256,zIndex:z,attribution:'Iowa State IEM'});
+// ── Overlays ──────────────────────────────────────────────────────────────────
+function makeOv(iemBase,z,op){
+  return L.tileLayer(proxyTile(iemBase),{opacity:op,tileSize:256,zIndex:z,attribution:'Iowa State IEM'});
 }
 document.getElementById('tog-states').onclick=function(){
   statesOn=!statesOn; document.getElementById('states-tag').textContent=statesOn?'on':'off';
   this.classList.toggle('on',statesOn);
-  if(statesOn){if(!statesLayer)statesLayer=makeOv('usstates-900913',25,0.6); statesLayer.addTo(map);}
+  if(statesOn){if(!statesLayer)statesLayer=makeOv('https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/usstates-900913',25,0.6); statesLayer.addTo(map);}
   else if(statesLayer?._map)map.removeLayer(statesLayer);
 };
 document.getElementById('tog-counties').onclick=function(){
   countiesOn=!countiesOn; document.getElementById('counties-tag').textContent=countiesOn?'on':'off';
   this.classList.toggle('on',countiesOn);
-  if(countiesOn){if(!countiesLayer)countiesLayer=makeOv('uscounties-900913',24,0.4); countiesLayer.addTo(map);}
+  if(countiesOn){if(!countiesLayer)countiesLayer=makeOv('https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/uscounties-900913',24,0.4); countiesLayer.addTo(map);}
   else if(countiesLayer?._map)map.removeLayer(countiesLayer);
 };
-document.getElementById('tog-ww').onclick=function(){
-  wwOn=!wwOn; document.getElementById('ww-tag').textContent=wwOn?'on':'off';
-  this.classList.toggle('on',wwOn);
-  if(wwOn){if(!wwLayer)wwLayer=makeOv('warnings-c',26,0.65); wwLayer.addTo(map);}
-  else if(wwLayer?._map)map.removeLayer(wwLayer);
-};
-function bumpOverlays(){[statesLayer,countiesLayer,wwLayer].forEach(l=>{if(l?._map)l.setZIndex(25);});}
+function bumpOverlays(){[statesLayer,countiesLayer].forEach(l=>{if(l?._map)l.setZIndex(25);});}
 
 // ── Legend ────────────────────────────────────────────────────────────────────
 function updateLegend(p){
   const t=document.getElementById('leg-title'),b=document.getElementById('leg-bar'),l=document.getElementById('leg-labels');
-  if(p==='refd'||p==='nexrad'){
+  if(p==='obs-radar'||p==='obs-nowcast'||p==='hrrr-refd'||p==='radar'){
     t.textContent='Reflectivity (dBZ)';
     b.style.background='linear-gradient(to right,#0040ff,#00aaff,#00ffee,#00ff40,#aaff00,#ffff00,#ffcc00,#ff8800,#ff3300,#cc0000,#800000)';
     l.innerHTML='<span>5</span><span>15</span><span>25</span><span>35</span><span>45</span><span>55</span><span>65+</span>';
-  } else if(p==='refp'){
+  } else if(p==='hrrr-refp'){
     t.textContent='Frozen Precip Reflectivity';
     b.style.background='linear-gradient(to right,#ddeeff,#aaccff,#6699ff,#3366dd,#112299,#000f55)';
-    l.innerHTML='<span>Light</span><span>Mod</span><span>Heavy</span>';
+    l.innerHTML='<span>Light</span><span>Moderate</span><span>Heavy</span>';
+  } else if(p==='hrrr-t2m'){
+    t.textContent='2m Temperature (°F)';
+    b.style.background='linear-gradient(to right,#800080,#0000ff,#00aaff,#00ffaa,#ffff00,#ff8800,#ff0000)';
+    l.innerHTML='<span>-20°</span><span>0°</span><span>20°</span><span>40°</span><span>60°</span><span>80°</span><span>100°+</span>';
+  } else if(p==='hrrr-td2m'){
+    t.textContent='Dewpoint 2m (°F)';
+    b.style.background='linear-gradient(to right,#d4b483,#a0c860,#40a840,#008000,#004000)';
+    l.innerHTML='<span>Dry</span><span>20°</span><span>40°</span><span>55°</span><span>70°+</span>';
   } else if(p==='warnings'){
     t.textContent='NWS Warning Types';
     b.style.background='linear-gradient(to right,#ffff00,#ffa500,#ff4500,#ff0000,#9400d3)';
@@ -483,13 +514,13 @@ function clearLayers(){
   if(playing)togglePlay();
   layers.forEach(l=>{try{map.removeLayer(l);}catch(e){}});
   layers=[];
-  if(liveLayer){try{map.removeLayer(liveLayer);}catch(e){} liveLayer=null;}
 }
 function showLoading(v){document.getElementById('loading').style.display=v?'flex':'none';}
+function setLoadMsg(m,s){document.getElementById('load-msg').textContent=m; document.getElementById('load-sub').textContent=s||'';}
 function setStatus(t,m){const el=document.getElementById('status-pill');el.className=t;el.textContent=m;}
 
 // Auto-refresh every 15 min
-setInterval(()=>{ if(!playing&&pkg!=='nexrad'&&pkg!=='warnings') loadProduct(); }, 15*60*1000);
+setInterval(()=>{ if(!playing) loadProduct(); }, 15*60*1000);
 
 // Boot
 loadProduct();
