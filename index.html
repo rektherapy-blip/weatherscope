@@ -7,167 +7,197 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a2a3a;display:flex;flex-direction:column}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html, body { height:100%; overflow:hidden; }
+body { font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction:column; background:#0d1b2a; color:#e0e8f0; }
 
-#hdr{background:#1a3a5c;border-bottom:2px solid #0f2540;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#2060c0,#30b0e0);display:flex;align-items:center;justify-content:center;font-size:17px}
-.logo-name{font-weight:700;font-size:15px;color:#fff}
-.logo-sub{font-size:10px;color:#6090b8;font-family:monospace}
-.badge{background:#102030;border:1px solid #1e4060;border-radius:4px;padding:2px 8px;font-size:10px;color:#4a7090;font-family:monospace}
-.badge b{color:#70b8e0}
-#status-pill{border-radius:4px;padding:3px 10px;font-size:10px;font-family:monospace;border:1px solid;white-space:nowrap}
-#status-pill.ok     {background:#0a2a10;border-color:#1a5020;color:#40d870}
-#status-pill.loading{background:#0a1828;border-color:#1a3850;color:#50a0d0}
-#status-pill.err    {background:#2a0808;border-color:#501010;color:#e05050}
+/* Header */
+#hdr { background:#0a1628; border-bottom:2px solid #1a3a5c; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; gap:10px; flex-wrap:wrap; }
+.logo { display:flex; align-items:center; gap:10px; }
+.logo-icon { width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#1a5cb0,#20a8d8); display:flex; align-items:center; justify-content:center; font-size:20px; }
+.logo-title { font-weight:700; font-size:16px; color:#e8f0ff; }
+.logo-sub { font-size:10px; color:#4a7090; font-family:monospace; margin-top:1px; }
+#status { font-family:monospace; font-size:11px; padding:3px 10px; border-radius:4px; border:1px solid; }
+#status.ok      { background:#071a0e; border-color:#0f4020; color:#30d060; }
+#status.loading { background:#070f1a; border-color:#0f2a40; color:#3090d0; }
+#status.err     { background:#1a0707; border-color:#4a1010; color:#d04040; }
 
-#body{display:flex;flex:1;overflow:hidden;min-height:0}
+/* Body */
+#body { display:flex; flex:1; overflow:hidden; min-height:0; }
 
-#sb{width:192px;background:#1e3a5a;border-right:2px solid #0f2540;padding:6px;overflow-y:auto;flex-shrink:0}
-.sec{font-size:9px;color:#3a6080;text-transform:uppercase;letter-spacing:1.5px;font-family:monospace;padding:9px 5px 3px}
-.opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:5px;padding:6px 9px;color:#5a8aaa;font-size:12px;cursor:pointer;transition:all .12s;line-height:1.3}
-.opt:hover{color:#c0d8f0;background:#142840}
-.opt.on{background:#0d3060;border-color:#2070c0;color:#90d0f8}
-.opt .sub{display:block;font-size:10px;color:#3a6080;margin-top:1px}
-.opt.on .sub{color:#5090b0}
-.tag{float:right;font-size:9px;background:#0a1e30;border-radius:3px;padding:1px 5px;color:#2a5070;font-family:monospace}
-.opt.on .tag{color:#60a8d8;background:#082040}
-.divider{height:1px;background:#0f2540;margin:6px 4px}
+/* Sidebar */
+#sb { width:200px; background:#0a1628; border-right:2px solid #1a3a5c; padding:8px; overflow-y:auto; flex-shrink:0; display:flex; flex-direction:column; gap:2px; }
+.sec { font-size:9px; color:#2a5070; text-transform:uppercase; letter-spacing:1.5px; font-family:monospace; padding:10px 6px 4px; }
+.btn { display:block; width:100%; text-align:left; background:transparent; border:1px solid transparent; border-radius:5px; padding:7px 10px; color:#4a7090; font-size:12px; cursor:pointer; transition:all .12s; line-height:1.4; }
+.btn:hover { color:#a0c8e8; background:#0f2030; }
+.btn.on { background:#0c3060; border-color:#1a70c0; color:#70c8f8; }
+.btn small { display:block; font-size:10px; color:#2a5070; margin-top:1px; }
+.btn.on small { color:#3a7090; }
 
-#main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
-#tb{background:#e8eef4;border-bottom:1px solid #c0ccd8;padding:6px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
-.tl{font-size:11px;color:#4a6070}
-select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8px;color:#2a4060;font-size:12px;cursor:pointer;outline:none}
-#run-wrap{margin-left:auto;font-size:11px;font-family:monospace;color:#5a7090}
-#run-wrap b{color:#1a5090}
+/* Main */
+#main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-height:0; }
 
-#mw{flex:1;position:relative;overflow:hidden;min-height:0}
-#map{width:100%;height:100%}
-.leaflet-container{background:#f0f4f0!important}
-.leaflet-control-zoom a{background:#fff!important;color:#2a5090!important;border-color:#c0ccd8!important}
-.leaflet-control-attribution{background:rgba(255,255,255,.8)!important;color:#8090a0!important;font-size:9px}
+/* Toolbar */
+#tb { background:#0c1e30; border-bottom:1px solid #1a3a5c; padding:7px 14px; display:flex; align-items:center; gap:12px; flex-shrink:0; flex-wrap:wrap; }
+#tb label { font-size:11px; color:#3a6080; }
+#tb select { background:#071020; border:1px solid #1a3a5c; border-radius:4px; padding:4px 8px; color:#80b8d8; font-size:11px; cursor:pointer; outline:none; }
+#run-info { margin-left:auto; font-family:monospace; font-size:11px; color:#3a6080; }
+#run-info b { color:#4a9ac0; }
 
-#map-info{position:absolute;bottom:46px;left:10px;z-index:900;pointer-events:none;display:flex;flex-direction:column;gap:4px}
-.mp{background:rgba(255,255,255,.93);border:1px solid #c0ccd8;border-radius:5px;padding:4px 10px;font-size:11px;font-family:monospace;color:#4a6070;box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.mp b{color:#1a4080}
+/* Map */
+#mw { flex:1; position:relative; min-height:0; overflow:hidden; }
+#map { width:100%; height:100%; }
+.leaflet-container { background:#0a1420 !important; }
+.leaflet-control-zoom a { background:#0a1628 !important; color:#4a90c8 !important; border-color:#1a3a5c !important; }
+.leaflet-control-attribution { background:rgba(10,22,40,.8) !important; color:#2a5070 !important; font-size:9px; }
 
-#leg{position:absolute;top:10px;right:10px;z-index:900;background:rgba(255,255,255,.95);border:1px solid #c0ccd8;border-radius:7px;padding:9px 12px;font-family:monospace;min-width:195px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.leg-title{color:#4a6070;margin-bottom:5px;font-size:9px;text-transform:uppercase;letter-spacing:1.2px}
-.leg-bar{height:11px;width:100%;border-radius:3px;margin-bottom:3px}
-.leg-labels{display:flex;justify-content:space-between;color:#8090a0;font-size:9px}
+/* Map info overlay */
+#info { position:absolute; bottom:44px; left:10px; z-index:900; pointer-events:none; display:flex; flex-direction:column; gap:4px; }
+.pill { background:rgba(10,22,40,.9); border:1px solid #1a3a5c; border-radius:5px; padding:4px 10px; font-size:11px; font-family:monospace; color:#4a7090; }
+.pill b { color:#60a8d0; }
 
-#loading{position:absolute;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(248,250,252,.9)}
-.spinner{width:40px;height:40px;border-radius:50%;border:3px solid #c0d0e0;border-top-color:#2070c0;animation:spin .7s linear infinite;margin-bottom:12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-#loading p{color:#3a5a78;font-size:13px;font-family:monospace}
-#loading .lsub{color:#7090a8;font-size:11px;margin-top:4px}
+/* Legend */
+#leg { position:absolute; top:10px; right:10px; z-index:900; background:rgba(10,22,40,.92); border:1px solid #1a3a5c; border-radius:7px; padding:9px 12px; font-family:monospace; min-width:190px; }
+.leg-t { color:#3a6080; font-size:9px; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px; }
+.leg-b { height:11px; width:100%; border-radius:3px; margin-bottom:3px; }
+.leg-l { display:flex; justify-content:space-between; font-size:9px; color:#2a4a60; }
 
-#ctrl{background:#e8eef4;border-top:1px solid #c0ccd8;padding:8px 14px;flex-shrink:0}
-.cr{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.cb{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:5px 12px;color:#3a6080;font-size:13px;cursor:pointer;transition:all .12s;white-space:nowrap}
-.cb:hover{background:#e0eaf4;color:#1a3a60}
-.cb.on{background:#1a4a90;border-color:#1060c0;color:#fff}
-.cb:disabled{opacity:.3;cursor:default}
-#fh-slider{flex:1;accent-color:#1a60c0;cursor:pointer}
-#fh-val{font-family:monospace;font-size:11px;color:#4a6a88;min-width:185px;text-align:right}
-.ticks{display:flex;justify-content:space-between;font-size:9px;color:#90a8c0;font-family:monospace;padding:0 2px}
-.ticks span{cursor:pointer;padding:1px 3px;border-radius:2px;transition:color .1s}
-.ticks span:hover,.ticks span.cur{color:#1a60c0;font-weight:600}
+/* Controls */
+#ctrl { background:#0a1628; border-top:2px solid #1a3a5c; padding:9px 14px; flex-shrink:0; }
+.ctrl-row { display:flex; align-items:center; gap:7px; margin-bottom:6px; }
+.cb { background:#0c1e30; border:1px solid #1a3a5c; border-radius:5px; padding:5px 13px; color:#4a7090; font-size:13px; cursor:pointer; white-space:nowrap; transition:all .12s; }
+.cb:hover { background:#0f2a40; color:#90c0e0; }
+.cb.on { background:#0c3a80; border-color:#1a70c0; color:#70c8f8; }
+.cb:disabled { opacity:.3; cursor:default; }
+#fh-sl { flex:1; accent-color:#1a70c0; cursor:pointer; }
+#fh-lbl { font-family:monospace; font-size:11px; color:#3a6080; min-width:190px; text-align:right; }
+.ticks { display:flex; justify-content:space-between; font-family:monospace; font-size:9px; color:#1a3a5c; padding:0 2px; }
+.ticks span { cursor:pointer; padding:1px 3px; }
+.ticks span:hover, .ticks span.cur { color:#1a70c0; }
+
+/* Mobile sidebar toggle */
+#sb-toggle { display:none; background:#0c3060; border:none; color:#70c8f8; font-size:18px; padding:4px 10px; cursor:pointer; border-radius:4px; }
+@media(max-width:600px) {
+  #sb-toggle { display:block; }
+  #sb { position:absolute; z-index:1000; height:100%; transition:transform .2s; }
+  #sb.hidden { transform:translateX(-100%); }
+}
 </style>
 </head>
 <body>
 
 <div id="hdr">
-  <div class="logo">
-    <div class="logo-icon">🌩</div>
-    <div>
-      <div class="logo-name">NE Plains WeatherScope</div>
-      <div class="logo-sub">HRRR & NAM · Nebraska & Surrounding States</div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button id="sb-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="logo">
+      <div class="logo-icon">🌩</div>
+      <div>
+        <div class="logo-title">NE Plains WeatherScope</div>
+        <div class="logo-sub">HRRR & NAM · Nebraska & Surrounding States</div>
+      </div>
     </div>
   </div>
-  <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
-    <div class="badge">Data: <b>NOAA / Iowa State IEM</b></div>
-    <div class="badge">Run: <b id="run-time">—</b></div>
-    <div id="status-pill" class="loading">◌ Loading…</div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <div style="font-family:monospace;font-size:10px;color:#2a5070;background:#070f1a;border:1px solid #0f2a40;border-radius:4px;padding:2px 8px">
+      Data: <b style="color:#4a90c0">NOAA / Iowa State IEM</b>
+    </div>
+    <div id="status" class="loading">◌ Loading…</div>
   </div>
 </div>
 
 <div id="body">
   <div id="sb">
-    <div class="sec">HRRR · 0–18h</div>
-    <button class="opt on" data-prod="REFD">🟢 Reflectivity (Rain)<span class="sub">Simulated radar</span></button>
-    <button class="opt" data-prod="REFP">❄️ Reflectivity (Frozen)<span class="sub">Snow / ice / mixed</span></button>
-    <button class="opt" data-prod="T2M">🌡 2m Temperature<span class="sub">Always visible</span></button>
-    <button class="opt" data-prod="TD2M">💧 Dewpoint 2m<span class="sub">Surface moisture</span></button>
 
-    <div class="divider"></div>
+    <div class="sec">Model</div>
+    <button class="btn on" data-model="hrrr">
+      HRRR
+      <small>Hourly runs · 0–18h forecast</small>
+    </button>
+    <button class="btn" data-model="nam">
+      NAM 3km
+      <small>Every 6h · 0–60h forecast</small>
+    </button>
+
+    <div class="sec">Variable</div>
+    <button class="btn on" data-prod="REFD">
+      🟢 Reflectivity (Rain)
+      <small>Simulated radar</small>
+    </button>
+    <button class="btn" data-prod="REFP">
+      ❄️ Reflectivity (Frozen)
+      <small>Snow / ice / sleet</small>
+    </button>
+    <button class="btn" data-prod="T2M">
+      🌡 2m Temperature
+      <small>Always visible</small>
+    </button>
+    <button class="btn" data-prod="TD2M">
+      💧 Dewpoint
+      <small>Surface moisture</small>
+    </button>
+
     <div class="sec">Region</div>
-    <button class="opt on" data-view="ne">Nebraska</button>
-    <button class="opt" data-view="plains">Central Plains</button>
-    <button class="opt" data-view="ncus">North-Central US</button>
-    <button class="opt" data-view="conus">Full CONUS</button>
-    <button class="opt" data-view="ks">Kansas / Oklahoma</button>
-    <button class="opt" data-view="sd">Dakotas / MN</button>
-    <button class="opt" data-view="ia">Iowa / MO</button>
-    <button class="opt" data-view="co">Colorado / WY</button>
+    <button class="btn on" data-view="ne">Nebraska</button>
+    <button class="btn" data-view="plains">Central Plains</button>
+    <button class="btn" data-view="ncus">North-Central US</button>
+    <button class="btn" data-view="conus">Full CONUS</button>
+    <button class="btn" data-view="ks">Kansas / Oklahoma</button>
+    <button class="btn" data-view="sd">Dakotas / MN</button>
+    <button class="btn" data-view="ia">Iowa / MO</button>
+    <button class="btn" data-view="co">Colorado / WY</button>
 
-    <div class="divider"></div>
     <div class="sec">Base Map</div>
-    <button class="opt on" data-base="light">Light</button>
-    <button class="opt"    data-base="topo" >Terrain</button>
-    <button class="opt"    data-base="sat"  >Satellite</button>
-    <button class="opt"    data-base="dark" >Dark</button>
+    <button class="btn on" data-base="light">Light</button>
+    <button class="btn" data-base="dark">Dark</button>
+    <button class="btn" data-base="topo">Terrain</button>
+    <button class="btn" data-base="sat">Satellite</button>
 
-    <div class="divider"></div>
     <div class="sec">Overlays</div>
-    <button class="opt" id="tog-states">State Borders <span class="tag" id="states-tag">off</span></button>
-    <button class="opt" id="tog-counties">Counties <span class="tag" id="counties-tag">off</span></button>
-  </div>
+    <button class="btn" id="tog-st">State Borders <span id="st-tag" style="float:right;font-size:9px;color:#2a5070">off</span></button>
+    <button class="btn" id="tog-co">Counties <span id="co-tag" style="float:right;font-size:9px;color:#2a5070">off</span></button>
+
+  </div><!-- /sb -->
 
   <div id="main">
     <div id="tb">
-      <span class="tl">Opacity:</span>
-      <input type="range" id="op-sl" min="20" max="100" value="85" style="width:75px;accent-color:#1a60c0;cursor:pointer">
-      <span class="tl" id="op-val">85%</span>
-      <span class="tl" style="margin-left:8px">Speed:</span>
+      <label>Opacity:</label>
+      <input type="range" id="op-sl" min="20" max="100" value="85" style="width:70px;accent-color:#1a70c0">
+      <label id="op-val">85%</label>
+      <label style="margin-left:6px">Speed:</label>
       <select id="spd">
         <option value="900">Slow</option>
         <option value="450" selected>Normal</option>
         <option value="180">Fast</option>
       </select>
-      <span id="run-wrap">Model run: <b id="run-label">—</b></span>
+      <div id="run-info">Run: <b id="run-lbl">—</b></div>
     </div>
 
     <div id="mw">
       <div id="map"></div>
-      <div id="map-info">
-        <div class="mp" id="mp-prod">Product: <b>HRRR Reflectivity (Rain)</b></div>
-        <div class="mp" id="mp-fh">Forecast: <b>+0h</b></div>
-        <div class="mp" id="mp-valid">Valid: <b>—</b></div>
+
+      <div id="info">
+        <div class="pill" id="p-model">Model: <b>HRRR</b></div>
+        <div class="pill" id="p-prod">Product: <b>Reflectivity (Rain)</b></div>
+        <div class="pill" id="p-fh">Forecast: <b>+0h</b></div>
+        <div class="pill" id="p-valid">Valid: <b>—</b></div>
       </div>
+
       <div id="leg">
-        <div class="leg-title" id="leg-title">Reflectivity (dBZ)</div>
-        <div class="leg-bar"   id="leg-bar" style="background:linear-gradient(to right,#0040ff,#00aaff,#00ffee,#00ff40,#aaff00,#ffff00,#ffcc00,#ff8800,#ff3300,#cc0000,#800000)"></div>
-        <div class="leg-labels" id="leg-labels"><span>5</span><span>15</span><span>25</span><span>35</span><span>45</span><span>55</span><span>65+</span></div>
-      </div>
-      <div id="loading">
-        <div class="spinner"></div>
-        <p id="load-msg">Building HRRR tile layers…</p>
-        <p class="lsub" id="load-sub">Iowa State IEM via Vercel proxy</p>
+        <div class="leg-t" id="leg-t">Reflectivity (dBZ)</div>
+        <div class="leg-b" id="leg-b" style="background:linear-gradient(to right,#0040ff,#00aaff,#00ffee,#00ff40,#aaff00,#ffff00,#ffcc00,#ff8800,#ff3300,#cc0000,#800000)"></div>
+        <div class="leg-l" id="leg-l"><span>5</span><span>15</span><span>25</span><span>35</span><span>45</span><span>55</span><span>65+</span></div>
       </div>
     </div>
 
     <div id="ctrl">
-      <div class="cr">
+      <div class="ctrl-row">
         <button class="cb" id="b-st">⏮</button>
         <button class="cb" id="b-bk">◀</button>
         <button class="cb" id="b-pl">▶ Play</button>
         <button class="cb" id="b-fw">▶</button>
         <button class="cb" id="b-en">⏭</button>
-        <input type="range" id="fh-slider" min="0" value="0" step="1"/>
-        <span id="fh-val">+0h</span>
+        <input type="range" id="fh-sl" min="0" value="0" step="1"/>
+        <span id="fh-lbl">+0h</span>
       </div>
       <div class="ticks" id="ticks"></div>
     </div>
@@ -177,63 +207,66 @@ select{background:#fff;border:1px solid #c0ccd8;border-radius:5px;padding:4px 8p
 <script>
 'use strict';
 
-// ── Config ────────────────────────────────────────────────────────────────────
+// ── Regions ────────────────────────────────────────────────────────────────
 const VIEWS = {
   ne:    {c:[41.5,-99.5],z:7}, plains:{c:[40.5,-99.0],z:6},
   ncus:  {c:[43.0,-96.0],z:5}, conus: {c:[39.0,-96.0],z:4},
   ks:    {c:[37.5,-98.0],z:6}, sd:    {c:[45.5,-100.0],z:6},
   ia:    {c:[42.0,-93.0],z:6}, co:    {c:[40.0,-105.5],z:6},
 };
+
 const BASES = {
-  light:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-  topo: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-  sat:  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-  dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+  dark:  'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  topo:  'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+  sat:   'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 };
 
-// ── Custom Leaflet tile layer ─────────────────────────────────────────────────
-// KEY FIX: override getTileUrl so we substitute z/x/y FIRST,
-// THEN encode the complete IEM URL as the proxy param.
-// This avoids any {z}/{x}/{y} encoding issues entirely.
-const ProxyTileLayer = L.TileLayer.extend({
-  // iemTemplate should contain {z}, {x}, {y} as plain text
-  getTileUrl: function(coords) {
-    const iemUrl = this._url
+// ── Custom Leaflet layer ───────────────────────────────────────────────────
+// Substitutes z/x/y FIRST, then encodes the full IEM URL for the proxy.
+// This is the correct way to avoid {z}/{x}/{y} getting encoded.
+const ProxyLayer = L.TileLayer.extend({
+  getTileUrl(coords) {
+    const iem = this._url
       .replace('{z}', coords.z)
       .replace('{x}', coords.x)
       .replace('{y}', coords.y);
-    return '/api/tiles?url=' + encodeURIComponent(iemUrl);
+    return '/api/tiles?url=' + encodeURIComponent(iem);
   }
 });
 
-function proxyLayer(iemTemplate, opts) {
-  return new ProxyTileLayer(iemTemplate, opts);
+function mkProxy(urlTemplate, opts) {
+  return new ProxyLayer(urlTemplate, opts);
 }
 
-// ── IEM HRRR tile URL template ────────────────────────────────────────────────
-// Docs: https://mesonet.agron.iastate.edu/GIS/model.phtml
-// Format: /cache/tile.py/1.0.0/hrrr::{PROD}-F{MINS}-{INIT}/{z}/{x}/{y}.png
-//   PROD = REFD | REFP | T2M | TD2M
-//   MINS = forecast minutes, 4 digits (0000, 0060, 0120 ... 1080)
-//   INIT = YYYYMMDDHHMM  e.g. 202603252200
-function iemUrl(prod, mins, init) {
-  const M = String(mins).padStart(4, '0');
-  return `https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/hrrr::${prod}-F${M}-${init}/{z}/{x}/{y}.png`;
+// ── IEM URL builder ────────────────────────────────────────────────────────
+// HRRR: /cache/tile.py/1.0.0/hrrr::REFD-F{MINS}-{INIT}/{z}/{x}/{y}.png
+// NAM:  /cache/tile.py/1.0.0/nam4km::REFD-F{MINS}-{INIT}/{z}/{x}/{y}.png
+function iemUrl(model, prod, mins, init) {
+  const M    = String(mins).padStart(4, '0');
+  const pfx  = model === 'nam' ? 'nam4km' : 'hrrr';
+  return `https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/${pfx}::${prod}-F${M}-${init}/{z}/{x}/{y}.png`;
 }
 
-// ── Calculate HRRR init from UTC clock ───────────────────────────────────────
-// HRRR runs every hour. Go back 1h to ensure IEM has processed it.
-function calcInit() {
+// ── Run time calculator ────────────────────────────────────────────────────
+// HRRR: every 1h, go back 1h for IEM processing lag
+// NAM:  every 6h (00/06/12/18z), go back 6h for processing lag
+function calcInit(model) {
   const d = new Date();
   d.setUTCMinutes(0, 0, 0);
-  d.setUTCHours(d.getUTCHours() - 1);
+  if (model === 'nam') {
+    const h = Math.floor(d.getUTCHours() / 6) * 6;
+    d.setUTCHours(h - 6);
+  } else {
+    d.setUTCHours(d.getUTCHours() - 1);
+  }
   return [
     d.getUTCFullYear(),
     String(d.getUTCMonth()+1).padStart(2,'0'),
     String(d.getUTCDate()).padStart(2,'0'),
     String(d.getUTCHours()).padStart(2,'0'),
     '00'
-  ].join('');  // "202603252200"
+  ].join('');
 }
 
 function fmtInit(s) {
@@ -241,222 +274,240 @@ function fmtInit(s) {
   return `${s.slice(4,6)}/${s.slice(6,8)}/${s.slice(0,4)} ${s.slice(8,10)}z`;
 }
 
-function validTime(init, fhMins) {
+function validTime(init, mins) {
   try {
-    const dt = new Date(Date.UTC(
-      +init.slice(0,4), +init.slice(4,6)-1,
-      +init.slice(6,8), +init.slice(8,10)
-    ));
-    dt.setUTCMinutes(dt.getUTCMinutes() + fhMins);
+    const dt = new Date(Date.UTC(+init.slice(0,4),+init.slice(4,6)-1,+init.slice(6,8),+init.slice(8,10)));
+    dt.setUTCMinutes(dt.getUTCMinutes() + mins);
     return dt.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
   } catch { return '—'; }
 }
 
-// ── Map ───────────────────────────────────────────────────────────────────────
+// ── Map ────────────────────────────────────────────────────────────────────
 const map = L.map('map', {center:VIEWS.ne.c, zoom:VIEWS.ne.z});
 let baseLayer = L.tileLayer(BASES.light, {attribution:'© OSM © CARTO', maxZoom:18}).addTo(map);
 
-// ── App state ─────────────────────────────────────────────────────────────────
-let prod        = 'REFD';
-let initStr     = calcInit();
-let frames      = [];
-let layers      = [];
-let currentFrame= 0;
-let playing     = false;
-let playTimer   = null;
-let opacity     = 0.85;
-let statesLayer = null, statesOn   = false;
-let countiesLayer=null, countiesOn = false;
+// ── State ──────────────────────────────────────────────────────────────────
+let model    = 'hrrr';
+let prod     = 'REFD';
+let initStr  = '';
+let frames   = [];
+let layers   = [];
+let curF     = 0;
+let playing  = false;
+let timer    = null;
+let opacity  = 0.85;
+let stLayer  = null, stOn = false;
+let coLayer  = null, coOn = false;
 
-// Build 0–18h frame list for HRRR
+// ── Build frames ───────────────────────────────────────────────────────────
 function buildFrames() {
-  const out = [];
-  for (let h = 0; h <= 18; h++) out.push({h, mins:h*60, label:`+${h}h`});
+  const max  = model === 'hrrr' ? 18 : 60;
+  const step = model === 'hrrr' ? 1  : 3;
+  const out  = [];
+  for (let h = 0; h <= max; h += step) {
+    out.push({ h, mins: h*60, label: `+${h}h` });
+  }
   return out;
 }
 
-// ── Build all tile layers for current product + run ───────────────────────────
+// ── Build layers ───────────────────────────────────────────────────────────
 function buildLayers() {
   clearLayers();
-  frames = buildFrames();
   layers = frames.map(f =>
-    proxyLayer(iemUrl(prod, f.mins, initStr), {
-      opacity:     0,
-      tileSize:    256,
-      zIndex:      10,
-      attribution: 'NOAA HRRR · Iowa State IEM',
+    mkProxy(iemUrl(model, prod, f.mins, initStr), {
+      opacity: 0, tileSize: 256, zIndex: 10,
+      attribution: 'NOAA / Iowa State IEM',
     })
   );
 }
 
-// ── Show a frame ──────────────────────────────────────────────────────────────
+// ── Show frame ─────────────────────────────────────────────────────────────
 function showFrame(idx) {
   if (!layers.length) return;
   layers.forEach(l => { try{map.removeLayer(l);}catch(e){} });
-  currentFrame = Math.max(0, Math.min(idx, layers.length-1));
-  layers[currentFrame].setOpacity(opacity);
-  layers[currentFrame].addTo(map);
-  bumpOverlays();
+  curF = Math.max(0, Math.min(idx, layers.length-1));
+  layers[curF].setOpacity(opacity);
+  layers[curF].addTo(map);
+  bumpOv();
 
-  const f = frames[currentFrame];
-  document.getElementById('fh-slider').value = currentFrame;
-  document.getElementById('fh-val').textContent    = f.label + '  (' + validTime(initStr, f.mins) + ')';
-  document.getElementById('mp-fh').innerHTML       = `Forecast: <b>${f.label}</b>`;
-  document.getElementById('mp-valid').innerHTML    = `Valid: <b>${validTime(initStr, f.mins)}</b>`;
+  const f = frames[curF];
+  document.getElementById('fh-sl').value     = curF;
+  document.getElementById('fh-lbl').textContent = f.label + '  (' + validTime(initStr, f.mins) + ')';
+  document.getElementById('p-fh').innerHTML    = `Forecast: <b>${f.label}</b>`;
+  document.getElementById('p-valid').innerHTML = `Valid: <b>${validTime(initStr, f.mins)}</b>`;
   highlightTick();
 }
 
-// ── Load ──────────────────────────────────────────────────────────────────────
+// ── Load ───────────────────────────────────────────────────────────────────
 function load() {
-  showLoading(true);
-  initStr = calcInit();
-  document.getElementById('run-time').textContent  = fmtInit(initStr);
-  document.getElementById('run-label').textContent = fmtInit(initStr);
+  setStatus('loading', '◌ Loading…');
+  initStr = calcInit(model);
+  frames  = buildFrames();
+
+  document.getElementById('run-lbl').textContent = fmtInit(initStr);
+  document.getElementById('p-model').innerHTML   = `Model: <b>${model.toUpperCase()}</b>`;
 
   buildLayers();
   setupSlider();
   showFrame(0);
-  updateLegend(prod);
+  updateLegend();
 
-  const labels = {REFD:'Reflectivity (Rain)',REFP:'Reflectivity (Frozen)',T2M:'2m Temperature',TD2M:'Dewpoint 2m'};
-  document.getElementById('mp-prod').innerHTML = `Product: <b>HRRR ${labels[prod]||prod}</b>`;
-  setStatus('ok', `● HRRR ${labels[prod]||prod} · run ${fmtInit(initStr)}`);
-  showLoading(false);
+  const pLabels = {REFD:'Reflectivity (Rain)',REFP:'Reflectivity (Frozen)',T2M:'2m Temperature',TD2M:'Dewpoint'};
+  document.getElementById('p-prod').innerHTML = `Product: <b>${pLabels[prod]||prod}</b>`;
+
+  setStatus('ok', `● ${model.toUpperCase()} ${pLabels[prod]||prod} · ${fmtInit(initStr)}`);
 }
 
-// ── Slider / ticks ────────────────────────────────────────────────────────────
+// ── Slider / ticks ─────────────────────────────────────────────────────────
 function setupSlider() {
-  const sl = document.getElementById('fh-slider');
+  const sl = document.getElementById('fh-sl');
   sl.max = Math.max(0, frames.length-1);
   sl.value = 0;
-  buildTicks();
-}
-function buildTicks() {
-  const row=document.getElementById('ticks'); row.innerHTML='';
-  const n=frames.length, step=Math.max(1,Math.floor(n/10));
-  for(let i=0;i<n;i+=step){
-    const sp=document.createElement('span');
-    sp.textContent=frames[i]?.label||'';
-    const ii=i; sp.onclick=()=>showFrame(ii);
+  const row = document.getElementById('ticks');
+  row.innerHTML = '';
+  const step = Math.max(1, Math.floor(frames.length / 10));
+  for (let i = 0; i < frames.length; i += step) {
+    const sp = document.createElement('span');
+    sp.textContent = frames[i].label;
+    const ii = i;
+    sp.onclick = () => showFrame(ii);
     row.appendChild(sp);
   }
 }
-function highlightTick(){
-  const spans=document.querySelectorAll('#ticks span');
-  const step=Math.max(1,Math.floor(frames.length/10));
-  spans.forEach((sp,i)=>sp.classList.toggle('cur',Math.abs(i*step-currentFrame)<=1));
+
+function highlightTick() {
+  const spans = document.querySelectorAll('#ticks span');
+  const step  = Math.max(1, Math.floor(frames.length/10));
+  spans.forEach((sp,i) => sp.classList.toggle('cur', Math.abs(i*step - curF) <= 1));
 }
 
-// ── Playback ──────────────────────────────────────────────────────────────────
-function togglePlay(){
-  playing=!playing;
-  const btn=document.getElementById('b-pl');
-  btn.textContent=playing?'⏸ Pause':'▶ Play';
-  btn.classList.toggle('on',playing);
-  if(playing){
-    playTimer=setInterval(()=>showFrame(currentFrame+1>=layers.length?0:currentFrame+1),+document.getElementById('spd').value);
-  } else clearInterval(playTimer);
+// ── Playback ───────────────────────────────────────────────────────────────
+function togglePlay() {
+  playing = !playing;
+  const btn = document.getElementById('b-pl');
+  btn.textContent = playing ? '⏸ Pause' : '▶ Play';
+  btn.classList.toggle('on', playing);
+  if (playing) {
+    timer = setInterval(() => showFrame(curF+1 >= layers.length ? 0 : curF+1),
+      +document.getElementById('spd').value);
+  } else clearInterval(timer);
 }
-document.getElementById('b-pl').onclick=togglePlay;
-document.getElementById('b-st').onclick=()=>showFrame(0);
-document.getElementById('b-en').onclick=()=>showFrame(layers.length-1);
-document.getElementById('b-bk').onclick=()=>showFrame(currentFrame-1);
-document.getElementById('b-fw').onclick=()=>showFrame(currentFrame+1);
-document.getElementById('fh-slider').oninput=e=>showFrame(+e.target.value);
 
-// ── Opacity ────────────────────────────────────────────────────────────────────
-document.getElementById('op-sl').oninput=function(){
-  opacity=this.value/100;
-  document.getElementById('op-val').textContent=this.value+'%';
-  if(layers[currentFrame]?._map) layers[currentFrame].setOpacity(opacity);
+document.getElementById('b-pl').onclick = togglePlay;
+document.getElementById('b-st').onclick = () => showFrame(0);
+document.getElementById('b-en').onclick = () => showFrame(layers.length-1);
+document.getElementById('b-bk').onclick = () => showFrame(curF-1);
+document.getElementById('b-fw').onclick = () => showFrame(curF+1);
+document.getElementById('fh-sl').oninput = e => showFrame(+e.target.value);
+
+// ── Opacity ────────────────────────────────────────────────────────────────
+document.getElementById('op-sl').oninput = function() {
+  opacity = this.value/100;
+  document.getElementById('op-val').textContent = this.value+'%';
+  if (layers[curF]?._map) layers[curF].setOpacity(opacity);
 };
 
-// ── Sidebar ───────────────────────────────────────────────────────────────────
-document.querySelectorAll('[data-prod]').forEach(btn=>{
-  btn.onclick=function(){
-    document.querySelectorAll('[data-prod]').forEach(b=>b.classList.remove('on'));
+// ── Sidebar buttons ────────────────────────────────────────────────────────
+document.querySelectorAll('[data-model]').forEach(btn => {
+  btn.onclick = function() {
+    document.querySelectorAll('[data-model]').forEach(b => b.classList.remove('on'));
     this.classList.add('on');
-    prod=this.dataset.prod;
-    if(playing)togglePlay();
+    model = this.dataset.model;
+    if (playing) togglePlay();
     load();
   };
 });
-document.querySelectorAll('[data-view]').forEach(btn=>{
-  btn.onclick=function(){
-    document.querySelectorAll('[data-view]').forEach(b=>b.classList.remove('on'));
+
+document.querySelectorAll('[data-prod]').forEach(btn => {
+  btn.onclick = function() {
+    document.querySelectorAll('[data-prod]').forEach(b => b.classList.remove('on'));
     this.classList.add('on');
-    const v=VIEWS[this.dataset.view]; if(v) map.setView(v.c,v.z,{animate:true});
+    prod = this.dataset.prod;
+    if (playing) togglePlay();
+    load();
   };
 });
-document.querySelectorAll('[data-base]').forEach(btn=>{
-  btn.onclick=function(){
-    document.querySelectorAll('[data-base]').forEach(b=>b.classList.remove('on'));
+
+document.querySelectorAll('[data-view]').forEach(btn => {
+  btn.onclick = function() {
+    document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('on'));
+    this.classList.add('on');
+    const v = VIEWS[this.dataset.view];
+    if (v) map.setView(v.c, v.z, {animate:true});
+  };
+});
+
+document.querySelectorAll('[data-base]').forEach(btn => {
+  btn.onclick = function() {
+    document.querySelectorAll('[data-base]').forEach(b => b.classList.remove('on'));
     this.classList.add('on');
     map.removeLayer(baseLayer);
-    baseLayer=L.tileLayer(BASES[this.dataset.base],{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
-    bumpOverlays();
+    baseLayer = L.tileLayer(BASES[this.dataset.base], {attribution:'© OpenStreetMap', maxZoom:18}).addTo(map);
+    bumpOv();
   };
 });
 
-// ── Overlays ──────────────────────────────────────────────────────────────────
-function makeOvLayer(iemTemplate, z, op) {
-  return proxyLayer(iemTemplate, {opacity:op, tileSize:256, zIndex:z, attribution:'Iowa State IEM'});
+// ── Overlays ───────────────────────────────────────────────────────────────
+function mkOv(iem, z, op) {
+  return mkProxy(`https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/${iem}/{z}/{x}/{y}.png`,
+    {opacity:op, tileSize:256, zIndex:z, attribution:'Iowa State IEM'});
 }
-document.getElementById('tog-states').onclick=function(){
-  statesOn=!statesOn;
-  document.getElementById('states-tag').textContent=statesOn?'on':'off';
-  this.classList.toggle('on',statesOn);
-  if(statesOn){
-    if(!statesLayer) statesLayer=makeOvLayer(
-      'https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/usstates-900913/{z}/{x}/{y}.png',25,0.6);
-    statesLayer.addTo(map);
-  } else if(statesLayer?._map) map.removeLayer(statesLayer);
+document.getElementById('tog-st').onclick = function() {
+  stOn = !stOn;
+  document.getElementById('st-tag').textContent = stOn ? 'on' : 'off';
+  this.classList.toggle('on', stOn);
+  if (stOn) { if (!stLayer) stLayer = mkOv('usstates-900913',25,0.6); stLayer.addTo(map); }
+  else if (stLayer?._map) map.removeLayer(stLayer);
 };
-document.getElementById('tog-counties').onclick=function(){
-  countiesOn=!countiesOn;
-  document.getElementById('counties-tag').textContent=countiesOn?'on':'off';
-  this.classList.toggle('on',countiesOn);
-  if(countiesOn){
-    if(!countiesLayer) countiesLayer=makeOvLayer(
-      'https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/uscounties-900913/{z}/{x}/{y}.png',24,0.4);
-    countiesLayer.addTo(map);
-  } else if(countiesLayer?._map) map.removeLayer(countiesLayer);
+document.getElementById('tog-co').onclick = function() {
+  coOn = !coOn;
+  document.getElementById('co-tag').textContent = coOn ? 'on' : 'off';
+  this.classList.toggle('on', coOn);
+  if (coOn) { if (!coLayer) coLayer = mkOv('uscounties-900913',24,0.4); coLayer.addTo(map); }
+  else if (coLayer?._map) map.removeLayer(coLayer);
 };
-function bumpOverlays(){[statesLayer,countiesLayer].forEach(l=>{if(l?._map)l.setZIndex(25);});}
+function bumpOv() { [stLayer,coLayer].forEach(l => { if(l?._map) l.setZIndex(25); }); }
 
-// ── Legend ────────────────────────────────────────────────────────────────────
-function updateLegend(p){
-  const t=document.getElementById('leg-title'),b=document.getElementById('leg-bar'),l=document.getElementById('leg-labels');
-  if(p==='REFD'){
+// ── Legend ─────────────────────────────────────────────────────────────────
+function updateLegend() {
+  const t=document.getElementById('leg-t'),b=document.getElementById('leg-b'),l=document.getElementById('leg-l');
+  if (prod==='REFD') {
     t.textContent='Reflectivity (dBZ)';
     b.style.background='linear-gradient(to right,#0040ff,#00aaff,#00ffee,#00ff40,#aaff00,#ffff00,#ffcc00,#ff8800,#ff3300,#cc0000,#800000)';
     l.innerHTML='<span>5</span><span>15</span><span>25</span><span>35</span><span>45</span><span>55</span><span>65+</span>';
-  } else if(p==='REFP'){
+  } else if (prod==='REFP') {
     t.textContent='Frozen Precip (dBZ)';
-    b.style.background='linear-gradient(to right,#ddeeff,#aaccff,#6699ff,#3366dd,#112299,#000f55)';
-    l.innerHTML='<span>Light</span><span>Moderate</span><span>Heavy</span>';
-  } else if(p==='T2M'){
+    b.style.background='linear-gradient(to right,#ddeeff,#aaccff,#6699ff,#3366dd,#1144aa,#001166)';
+    l.innerHTML='<span>Light</span><span>Mod</span><span>Heavy</span>';
+  } else if (prod==='T2M') {
     t.textContent='2m Temperature (°F)';
     b.style.background='linear-gradient(to right,#800080,#0000ff,#00aaff,#00ffaa,#ffff00,#ff8800,#ff0000)';
-    l.innerHTML='<span>-20°</span><span>0°</span><span>20°</span><span>40°</span><span>60°</span><span>80°</span><span>100°+</span>';
-  } else if(p==='TD2M'){
+    l.innerHTML='<span>-20°</span><span>0°</span><span>32°</span><span>60°</span><span>80°</span><span>100°+</span>';
+  } else if (prod==='TD2M') {
     t.textContent='Dewpoint 2m (°F)';
-    b.style.background='linear-gradient(to right,#d4b483,#a0c860,#40a840,#008000,#004000)';
+    b.style.background='linear-gradient(to right,#c8a060,#a0c860,#40a840,#008030,#004020)';
     l.innerHTML='<span>Dry</span><span>20°</span><span>40°</span><span>55°</span><span>70°+</span>';
   }
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function clearLayers(){
-  if(playing)togglePlay();
-  layers.forEach(l=>{try{map.removeLayer(l);}catch(e){}});
-  layers=[];
+// ── Mobile sidebar ─────────────────────────────────────────────────────────
+function toggleSidebar() {
+  document.getElementById('sb').classList.toggle('hidden');
 }
-function showLoading(v){document.getElementById('loading').style.display=v?'flex':'none';}
-function setStatus(t,m){const el=document.getElementById('status-pill');el.className=t;el.textContent=m;}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function clearLayers() {
+  if (playing) togglePlay();
+  layers.forEach(l => { try{map.removeLayer(l);}catch(e){} });
+  layers = [];
+}
+function setStatus(cls, msg) {
+  const el = document.getElementById('status');
+  el.className = cls; el.textContent = msg;
+}
 
 // Auto-refresh every 15 min
-setInterval(()=>{ if(!playing) load(); }, 15*60*1000);
+setInterval(() => { if (!playing) load(); }, 15*60*1000);
 
 // Boot
 load();
