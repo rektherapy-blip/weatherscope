@@ -77,7 +77,32 @@ body { font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction
 .ticks span { cursor:pointer; padding:1px 3px; }
 .ticks span:hover, .ticks span.cur { color:#1a70c0; }
 
-/* Mobile sidebar toggle */
+/* City markers */
+.city-label {
+  background: rgba(10,22,40,0.82);
+  border: 1px solid #2a5a8a;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #c0d8f0;
+  white-space: nowrap;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+.city-label.major {
+  background: rgba(10,22,40,0.92);
+  border-color: #4a90c8;
+  color: #e0f0ff;
+  font-size: 12px;
+}
+.city-dot {
+  width: 7px; height: 7px;
+  background: #60b0ff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(60,150,255,0.6);
+}
 #sb-toggle { display:none; background:#0c3060; border:none; color:#70c8f8; font-size:18px; padding:4px 10px; cursor:pointer; border-radius:4px; }
 @media(max-width:600px) {
   #sb-toggle { display:block; }
@@ -155,7 +180,8 @@ body { font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction
     <button class="btn" data-base="sat">Satellite</button>
 
     <div class="sec">Overlays</div>
-    <button class="btn" id="tog-st">State Borders <span id="st-tag" style="float:right;font-size:9px;color:#2a5070">off</span></button>
+    <button class="btn on" id="tog-st">State Borders <span id="st-tag" style="float:right;font-size:9px;color:#3a7090">on</span></button>
+    <button class="btn on" id="tog-cities">Cities <span id="cities-tag" style="float:right;font-size:9px;color:#3a7090">on</span></button>
     <button class="btn" id="tog-co">Counties <span id="co-tag" style="float:right;font-size:9px;color:#2a5070">off</span></button>
 
   </div><!-- /sb -->
@@ -502,15 +528,75 @@ document.querySelectorAll('[data-base]').forEach(btn => {
     map.removeLayer(baseLayer);
     baseLayer = L.tileLayer(BASES[this.dataset.base], {attribution:'© OpenStreetMap', maxZoom:18}).addTo(map);
     bumpOv();
+    // Re-add cities so they sit above the new base map
+    if (citiesOn) { removeCities(); addCities(); }
   };
 });
+
+// ── Cities ─────────────────────────────────────────────────────────────────
+const CITIES = [
+  // Nebraska
+  { name:'Omaha',       lat:41.256, lon:-95.934, major:true  },
+  { name:'Lincoln',     lat:40.813, lon:-96.702, major:true  },
+  { name:'North Platte',lat:41.123, lon:-100.765,major:false },
+  { name:'Scottsbluff', lat:41.866, lon:-103.662,major:false },
+  { name:'Norfolk',     lat:41.985, lon:-97.415, major:false },
+  { name:'Grand Island',lat:40.925, lon:-98.342, major:false },
+  // Surrounding states
+  { name:'Sioux Falls', lat:43.549, lon:-96.700, major:false },
+  { name:'Rapid City',  lat:44.080, lon:-103.231,major:false },
+  { name:'Kansas City', lat:39.099, lon:-94.578, major:false },
+  { name:'Wichita',     lat:37.688, lon:-97.336, major:false },
+  { name:'Denver',      lat:39.739, lon:-104.984,major:false },
+  { name:'Des Moines',  lat:41.619, lon:-93.598, major:false },
+  { name:'Sioux City',  lat:42.500, lon:-96.400, major:false },
+  { name:'Cheyenne',    lat:41.140, lon:-104.820,major:false },
+];
+
+let cityLayers = [];
+
+function addCities() {
+  removeCities();
+  CITIES.forEach(city => {
+    // Dot marker
+    const dot = L.divIcon({
+      className: '',
+      html: `<div class="city-dot"></div>`,
+      iconSize: [7,7],
+      iconAnchor: [3,3],
+    });
+    const dotMarker = L.marker([city.lat, city.lon], {icon:dot, zIndex:50, interactive:false}).addTo(map);
+
+    // Label
+    const label = L.divIcon({
+      className: '',
+      html: `<div class="city-label ${city.major?'major':''}">${city.name}</div>`,
+      iconAnchor: [-6, 8],
+    });
+    const labelMarker = L.marker([city.lat, city.lon], {icon:label, zIndex:51, interactive:false}).addTo(map);
+
+    cityLayers.push(dotMarker, labelMarker);
+  });
+}
+
+function removeCities() {
+  cityLayers.forEach(l => { try{ map.removeLayer(l); }catch(e){} });
+  cityLayers = [];
+}
 
 // ── Overlays ───────────────────────────────────────────────────────────────
 function mkOv(iem, z, op) {
   return mkProxy(`https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/${iem}/{z}/{x}/{y}.png`,
     {opacity:op, tileSize:256, zIndex:z, attribution:'Iowa State IEM'});
 }
-document.getElementById('tog-st').onclick = function() {
+let citiesOn = true;
+document.getElementById('tog-cities').onclick = function() {
+  citiesOn = !citiesOn;
+  document.getElementById('cities-tag').textContent = citiesOn ? 'on' : 'off';
+  this.classList.toggle('on', citiesOn);
+  if (citiesOn) addCities(); else removeCities();
+};
+
   stOn = !stOn;
   document.getElementById('st-tag').textContent = stOn ? 'on' : 'off';
   this.classList.toggle('on', stOn);
@@ -569,6 +655,12 @@ setInterval(() => { if (!playing) load(true); }, 15*60*1000);
 
 // Boot — populate runs then load
 load(true);
+
+// Default overlays on
+stOn = true;
+if (!stLayer) stLayer = mkOv('usstates-900913', 25, 0.7);
+stLayer.addTo(map);
+addCities();
 </script>
 </body>
 </html>
