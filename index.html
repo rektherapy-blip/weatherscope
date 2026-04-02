@@ -50,6 +50,8 @@ body { font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction
 .leaflet-container { background:#0a1420 !important; }
 .leaflet-control-zoom a { background:#0a1628 !important; color:#4a90c8 !important; border-color:#1a3a5c !important; }
 .leaflet-control-attribution { background:rgba(10,22,40,.8) !important; color:#2a5070 !important; font-size:9px; }
+/* Smooth out the blocky HRRR/NAM model grid pixels */
+.leaflet-tile { image-rendering: auto; filter: blur(0.6px) saturate(1.2); }
 
 /* Map info overlay */
 #info { position:absolute; bottom:44px; left:10px; z-index:900; pointer-events:none; display:flex; flex-direction:column; gap:4px; }
