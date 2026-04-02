@@ -255,10 +255,12 @@ function calcInit(model) {
   const d = new Date();
   d.setUTCMinutes(0, 0, 0);
   if (model === 'nam') {
+    // NAM runs every 6h — go back 12h to ensure IEM has processed it
     const h = Math.floor(d.getUTCHours() / 6) * 6;
-    d.setUTCHours(h - 6);
+    d.setUTCHours(h - 12);
   } else {
-    d.setUTCHours(d.getUTCHours() - 1);
+    // HRRR runs every hour — go back 2h to ensure IEM has processed it
+    d.setUTCHours(d.getUTCHours() - 2);
   }
   return [
     d.getUTCFullYear(),
