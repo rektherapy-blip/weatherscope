@@ -171,7 +171,8 @@ body { font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction
         <option value="450" selected>Normal</option>
         <option value="180">Fast</option>
       </select>
-      <div id="run-info">Run: <b id="run-lbl">—</b></div>
+      <label style="margin-left:6px">Run:</label>
+      <select id="run-sel" style="min-width:165px;font-family:monospace"></select>
     </div>
 
     <div id="mw">
@@ -251,18 +252,15 @@ function iemUrl(model, prod, mins, init) {
 }
 
 // ── Run time calculator ────────────────────────────────────────────────────
-// HRRR: every 1h, go back 1h for IEM processing lag
-// NAM:  every 6h (00/06/12/18z), go back 6h for processing lag
-function calcInit(model) {
+// Returns an init string for a given number of hours back from now
+function calcInit(model, hoursBack) {
   const d = new Date();
   d.setUTCMinutes(0, 0, 0);
   if (model === 'nam') {
-    // NAM runs every 6h — go back 12h to ensure IEM has processed it
     const h = Math.floor(d.getUTCHours() / 6) * 6;
-    d.setUTCHours(h - 12);
+    d.setUTCHours(h - hoursBack);
   } else {
-    // HRRR runs every hour — go back 2h to ensure IEM has processed it
-    d.setUTCHours(d.getUTCHours() - 2);
+    d.setUTCHours(d.getUTCHours() - hoursBack);
   }
   return [
     d.getUTCFullYear(),
@@ -271,6 +269,24 @@ function calcInit(model) {
     String(d.getUTCHours()).padStart(2,'0'),
     '00'
   ].join('');
+}
+
+// ── Populate run selector with last 4 available runs ─────────────────────
+function populateRunSelector(mdl) {
+  const sel   = document.getElementById('run-sel');
+  const runs  = [];
+  // HRRR: last 4 runs = 2h, 3h, 4h, 5h back (2h = most recent safe run)
+  // NAM:  last 4 runs = 12h, 18h, 24h, 30h back (runs every 6h)
+  const backs = mdl === 'nam' ? [12,18,24,30] : [2,3,4,5];
+  backs.forEach((b, i) => {
+    const init = calcInit(mdl, b);
+    const opt  = document.createElement('option');
+    opt.value  = init;
+    opt.textContent = fmtInit(init) + (i === 0 ? ' (latest)' : '');
+    runs.push(init);
+    sel.appendChild(opt);
+  });
+  return runs[0]; // return latest
 }
 
 function fmtInit(s) {
@@ -325,14 +341,37 @@ function buildLayers() {
   );
 }
 
+// ── Preload adjacent frames so tiles are cached before needed ──────────────
+function preloadAdjacent(idx) {
+  [-1, 1, 2].forEach(offset => {
+    const i = idx + offset;
+    if (i >= 0 && i < layers.length && !layers[i]._map) {
+      layers[i].setOpacity(0);
+      layers[i].addTo(map);
+    }
+  });
+}
+
 // ── Show frame ─────────────────────────────────────────────────────────────
 function showFrame(idx) {
   if (!layers.length) return;
-  layers.forEach(l => { try{map.removeLayer(l);}catch(e){} });
   curF = Math.max(0, Math.min(idx, layers.length-1));
-  layers[curF].setOpacity(opacity);
-  layers[curF].addTo(map);
+
+  layers.forEach((l, i) => {
+    if (i === curF) {
+      if (!l._map) l.addTo(map);
+      l.setOpacity(opacity);
+    } else {
+      l.setOpacity(0);
+      // Keep nearby frames loaded silently for smooth playback
+      // Remove frames that are far away to save memory
+      const keep = Math.abs(i - curF) <= 3;
+      if (!keep && l._map) { try{ map.removeLayer(l); }catch(e){} }
+    }
+  });
+
   bumpOv();
+  preloadAdjacent(curF);
 
   const f = frames[curF];
   document.getElementById('fh-sl').value     = curF;
@@ -343,22 +382,31 @@ function showFrame(idx) {
 }
 
 // ── Load ───────────────────────────────────────────────────────────────────
-function load() {
+function load(resetRuns) {
   setStatus('loading', '◌ Loading…');
-  initStr = calcInit(model);
+
+  // Rebuild run selector when model changes
+  if (resetRuns) {
+    const sel = document.getElementById('run-sel');
+    sel.innerHTML = '';
+    populateRunSelector(model);
+  }
+
+  // Use whichever run is selected in the dropdown
+  initStr = document.getElementById('run-sel').value;
   frames  = buildFrames();
 
-  document.getElementById('run-lbl').textContent = fmtInit(initStr);
-  document.getElementById('p-model').innerHTML   = `Model: <b>${model.toUpperCase()}</b>`;
+  document.getElementById('p-model').innerHTML = `Model: <b>${model.toUpperCase()}</b>`;
 
   buildLayers();
   setupSlider();
   showFrame(0);
+  // Silently preload first 4 frames so playback starts smooth
+  setTimeout(() => { [1,2,3,4].forEach(i => { if(layers[i] && !layers[i]._map){ layers[i].setOpacity(0); layers[i].addTo(map); }}); }, 500);
   updateLegend();
 
   const pLabels = {REFD:'Reflectivity (Rain)',REFP:'Reflectivity (Frozen)',T2M:'2m Temperature',TD2M:'Dewpoint'};
   document.getElementById('p-prod').innerHTML = `Product: <b>${pLabels[prod]||prod}</b>`;
-
   setStatus('ok', `● ${model.toUpperCase()} ${pLabels[prod]||prod} · ${fmtInit(initStr)}`);
 }
 
@@ -411,6 +459,12 @@ document.getElementById('op-sl').oninput = function() {
   if (layers[curF]?._map) layers[curF].setOpacity(opacity);
 };
 
+// ── Run selector ───────────────────────────────────────────────────────────
+document.getElementById('run-sel').onchange = function() {
+  if (playing) togglePlay();
+  load(false); // don't reset runs, just reload with selected run
+};
+
 // ── Sidebar buttons ────────────────────────────────────────────────────────
 document.querySelectorAll('[data-model]').forEach(btn => {
   btn.onclick = function() {
@@ -418,7 +472,7 @@ document.querySelectorAll('[data-model]').forEach(btn => {
     this.classList.add('on');
     model = this.dataset.model;
     if (playing) togglePlay();
-    load();
+    load(true); // reset run selector for new model
   };
 });
 
@@ -428,7 +482,7 @@ document.querySelectorAll('[data-prod]').forEach(btn => {
     this.classList.add('on');
     prod = this.dataset.prod;
     if (playing) togglePlay();
-    load();
+    load(false);
   };
 });
 
@@ -511,10 +565,10 @@ function setStatus(cls, msg) {
 }
 
 // Auto-refresh every 15 min
-setInterval(() => { if (!playing) load(); }, 15*60*1000);
+setInterval(() => { if (!playing) load(true); }, 15*60*1000);
 
-// Boot
-load();
+// Boot — populate runs then load
+load(true);
 </script>
 </body>
 </html>
