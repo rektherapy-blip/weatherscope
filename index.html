@@ -73,6 +73,8 @@ body { font-family:'Segoe UI',system-ui,sans-serif; display:flex; flex-direction
 .city-dot { width:7px; height:7px; background:#70c0ff; border:2px solid #fff; border-radius:50%; box-shadow:0 0 5px rgba(80,160,255,.7); }
 .city-lbl { background:rgba(10,22,40,.88); border:1px solid #2a6090; border-radius:4px; padding:2px 7px; font-size:11px; font-family:'Segoe UI',system-ui,sans-serif; color:#c0ddf8; white-space:nowrap; font-weight:600; pointer-events:none; }
 .city-lbl.big { font-size:12px; color:#e8f4ff; border-color:#4a90c8; background:rgba(10,22,40,.94); }
+/* IMPORTANT: remove Leaflet's default divIcon black box */
+.leaflet-div-icon { background:none !important; border:none !important; }
 
 #sb-toggle { display:none; background:#0c3060; border:none; color:#70c8f8; font-size:18px; padding:4px 10px; cursor:pointer; border-radius:4px; }
 @media(max-width:600px) {
